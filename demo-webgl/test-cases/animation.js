@@ -26,7 +26,7 @@ export function renderAnimation(canvas, spine) {
       canvas.getContext('webgl', config) ||
       canvas.getContext('experimental-webgl', config)
     if (!gl) {
-      alert('WebGL is unavailable.')
+      console.error('WebGL is unavailable.')
       return
     }
 
@@ -80,7 +80,6 @@ export function renderAnimation(canvas, spine) {
     }
 
     console.log('Atlas loaded successfully:', atlas)
-    console.log('Atlas has findRegion method:', typeof atlas.findRegion)
 
     // Create a AtlasAttachmentLoader that resolves region, mesh, boundingbox and path attachments
     atlasLoader = new spine.AtlasAttachmentLoader(atlas)

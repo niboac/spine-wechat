@@ -2815,6 +2815,7 @@ export function getSpine(canvas) {
           _this.assets[path] = texture
           _this.toLoad--
           _this.loaded++
+
           if (success) success(path, img)
         }
         img.onerror = function (ev) {
@@ -2885,8 +2886,10 @@ export function getSpine(canvas) {
                 var image = canvas.createImage()
                 image.width = 16
                 image.height = 16
+
                 return new spine.FakeTexture(image)
               })
+              _this.assets[path] = atlas
             } catch (e) {
               var ex = e
               _this.errors[path] =
