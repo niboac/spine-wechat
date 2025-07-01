@@ -78,13 +78,13 @@ export default class XMLHttpRequest extends EventTarget {
         return _responseHeader.get(this)[header]
     }
 
-    open(method, url /* async, user, password 这几个参数在小程序内不支持*/ ) {
+    open(method, url /* async, user, password 这几个参数在小程序内不支持*/) {
         this._method = method
         this._url = url
         _changeReadyState.call(this, XMLHttpRequest.OPENED)
     }
 
-    overrideMimeType() {}
+    overrideMimeType() { }
 
     send(data = '') {
         if (this.readyState !== XMLHttpRequest.OPENED) {
@@ -112,7 +112,7 @@ export default class XMLHttpRequest extends EventTarget {
                 if (typeof data !== 'string' && !(data instanceof ArrayBuffer)) {
                     try {
                         data = JSON.stringify(data)
-                    } catch (e) {}
+                    } catch (e) { }
                 }
 
                 this.status = statusCode
@@ -129,7 +129,7 @@ export default class XMLHttpRequest extends EventTarget {
                     Object.defineProperty(this, 'responseText', {
                         enumerable: true,
                         configurable: true,
-                        get: function() {
+                        get: function () {
                             throw "InvalidStateError : responseType is " + this.responseType;
                         }
                     });
@@ -143,7 +143,7 @@ export default class XMLHttpRequest extends EventTarget {
 
             const onFail = ({ errMsg }) => {
                 // TODO 规范错误
-console.log(errMsg);
+                console.log(errMsg);
                 if (errMsg.indexOf('abort') !== -1) {
                     _triggerEvent.call(this, 'abort')
                 } else {
