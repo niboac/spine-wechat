@@ -10,7 +10,7 @@ export function renderAnimation(canvas, spine) {
   var skeletonRenderer;
   var shapes;
 
-  var baseUrl = "http://test.mine.cn/spine/assets/";
+  var baseUrl = "https://a0.seayooassets.com/web/zero/spine/test-boy/";
   var skelName = "spineboy";
   var animName = "run";
   var swirlEffect = new spine.SwirlEffect(0);
@@ -79,7 +79,7 @@ export function renderAnimation(canvas, spine) {
     var animationStateData = new spine.AnimationStateData(skeleton.data);
     var animationState = new spine.AnimationState(animationStateData);
 
-      animationState.setAnimation(0, initialAnimation, true);
+    animationState.setAnimation(0, initialAnimation, true);
     animationState.addListener({
       start: function (track) {
         //console.log("Animation on track " + track.trackIndex + " started");
