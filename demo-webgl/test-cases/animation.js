@@ -59,7 +59,24 @@ export function renderAnimation(canvas, spine) {
   function loadSkeleton(name, initialAnimation, premultipliedAlpha, skin) {
     if (skin === undefined) skin = "default";
 
-    atlas = assetManager.get(name.replace("-ess", "").replace("-pro", "").replace("-stretchy-ik", "") + ".atlas");
+    var atlasName = name.replace("-ess", "").replace("-pro", "").replace("-stretchy-ik", "") + ".atlas";
+    console.log("Loading atlas:", atlasName);
+    atlas = assetManager.get(atlasName);
+    
+    // Debug: Check assetManager state
+    console.log("AssetManager assets:", assetManager.assets);
+    console.log("AssetManager errors:", assetManager.errors);
+    console.log("Atlas object:", atlas);
+    console.log("Atlas type:", typeof atlas);
+    
+    // Check if atlas was loaded successfully
+    if (!atlas) {
+      console.error("Available assets:", Object.keys(assetManager.assets || {}));
+      throw new Error("Atlas not found: " + atlasName + ". Make sure the atlas file is loaded correctly.");
+    }
+    
+    console.log("Atlas loaded successfully:", atlas);
+    console.log("Atlas has findRegion method:", typeof atlas.findRegion);
 
     // Create a AtlasAttachmentLoader that resolves region, mesh, boundingbox and path attachments
     atlasLoader = new spine.AtlasAttachmentLoader(atlas);

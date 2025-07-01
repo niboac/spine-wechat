@@ -25,7 +25,7 @@
     },
     "compileWorklet": false,
     "uglifyFileName": false,
-    "enhance": false,
+    "enhance": true,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true,
