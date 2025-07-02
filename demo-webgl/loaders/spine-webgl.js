@@ -9745,7 +9745,8 @@ export function getSpine(canvas) {
         PolygonBatcher.prototype.flush = function () {
           var gl = this.context.gl
           if (this.verticesLength == 0) return
-          this.lastTexture.bind()
+          if (this.lastTexture && typeof this.lastTexture.bind == 'function')
+            this.lastTexture.bind()
           this.mesh.draw(this.shader, gl.TRIANGLES)
           this.verticesLength = 0
           this.indicesLength = 0
