@@ -92,8 +92,8 @@ export function renderAnimation(canvas, spine) {
       assetManager.get(name + '.json')
     )
     var skeleton = new spine.Skeleton(skeletonData)
-    skeleton.scaleX = 2
-    skeleton.scaleY = 2
+    skeleton.scaleX = 1
+    skeleton.scaleY = 1
     skeleton.setSkinByName(skin)
     var bounds = calculateBounds(skeleton)
 
@@ -194,7 +194,6 @@ export function renderAnimation(canvas, spine) {
     var height = canvas.height * scale
 
     mvp.ortho2d(centerX - width / 2, centerY - height / 2, width, height)
-    debugger
     gl.viewport(0, 0, canvas.width, canvas.height)
   }
 }
