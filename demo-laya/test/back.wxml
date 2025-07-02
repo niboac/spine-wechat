@@ -1,3 +1,0 @@
-<!--test/back.wxml-->
-<text>test/back.wxml</text>
-<navigator open-type="navigateBack">回到上一页</navigator>

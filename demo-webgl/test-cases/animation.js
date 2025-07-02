@@ -12,9 +12,6 @@ export function renderAnimation(canvas, spine) {
   var baseUrl = 'https://a0.seayooassets.com/web/zero/spine/test-boy/'
   var skelName = 'spineboy'
   var animName = 'run'
-  var swirlEffect = new spine.SwirlEffect(0)
-  var jitterEffect = new spine.JitterEffect(20, 20)
-  var swirlTime = 0
 
   init()
 
