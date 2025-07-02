@@ -89,8 +89,8 @@ export function renderAnimation(canvas, spine) {
       assetManager.get(name + '.json')
     )
     var skeleton = new spine.Skeleton(skeletonData)
-    skeleton.scaleX = 1
-    skeleton.scaleY = 1
+    skeleton.scaleX = 2
+    skeleton.scaleY = 2
     skeleton.setSkinByName(skin)
     var bounds = calculateBounds(skeleton)
 
@@ -185,7 +185,7 @@ export function renderAnimation(canvas, spine) {
     var centerY = bounds.offset.y + bounds.size.y / 2
     var scaleX = bounds.size.x / canvas.width
     var scaleY = bounds.size.y / canvas.height
-    var scale = Math.max(scaleX, scaleY) * 1.2
+    var scale = Math.max(scaleX, scaleY) * 1
     if (scale < 1) scale = 1
     var width = canvas.width * scale
     var height = canvas.height * scale
