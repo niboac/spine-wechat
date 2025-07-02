@@ -40,8 +40,8 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.9.5",
-  "appid": "wx282374e7f933b012",
+  "libVersion": "3.8.9",
+  "appid": "wx2be993b66c1ce815",
   "projectname": "spine-webgl",
   "isGameTourist": false,
   "simulatorType": "wechat",
