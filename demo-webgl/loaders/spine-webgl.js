@@ -1,9 +1,4 @@
 import XMLHttpRequest from './XMLHttpRequest'
-
-function replaceDoubleSlashesRegex(url) {
-  // 保护协议部分，只替换路径中的多个斜线
-  return url.replace(/(https?:\/\/)/, '$1').replace(/(?<!:)\/\/+/g, '/')
-}
 export function getSpine(canvas) {
   var __extends =
     (this && this.__extends) ||
@@ -1811,6 +1806,7 @@ export function getSpine(canvas) {
     })(CurveTimeline)
     spine.PathConstraintMixTimeline = PathConstraintMixTimeline
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var AnimationState = (function () {
       function AnimationState(data) {
@@ -2677,6 +2673,7 @@ export function getSpine(canvas) {
     })()
     spine.AnimationStateAdapter2 = AnimationStateAdapter2
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var AnimationStateData = (function () {
       function AnimationStateData(skeletonData) {
@@ -2712,6 +2709,7 @@ export function getSpine(canvas) {
     })()
     spine.AnimationStateData = AnimationStateData
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var AssetManager = (function () {
       function AssetManager(textureLoader, pathPrefix) {
@@ -2805,8 +2803,8 @@ export function getSpine(canvas) {
         if (error === void 0) {
           error = null
         }
-
-        path = replaceDoubleSlashesRegex(this.pathPrefix + path)
+        debugger
+        path = this.pathPrefix + path
         this.toLoad++
         var img = canvas.createImage()
         img.crossOrigin = 'anonymous'
@@ -2815,7 +2813,6 @@ export function getSpine(canvas) {
           _this.assets[path] = texture
           _this.toLoad--
           _this.loaded++
-
           if (success) success(path, img)
         }
         img.onerror = function (ev) {
@@ -2824,6 +2821,7 @@ export function getSpine(canvas) {
           _this.loaded++
           if (error) error(path, "Couldn't load image " + path)
         }
+
         img.src = path
       }
       AssetManager.prototype.loadTextureData = function (
@@ -2839,6 +2837,7 @@ export function getSpine(canvas) {
         if (error === void 0) {
           error = null
         }
+
         path = this.pathPrefix + path
         this.toLoad++
         var img = canvas.createImage()
@@ -2873,6 +2872,7 @@ export function getSpine(canvas) {
           path.lastIndexOf('/') >= 0
             ? path.substring(0, path.lastIndexOf('/'))
             : ''
+        debugger
         path = this.pathPrefix + path
         this.toLoad++
         AssetManager.downloadText(
@@ -2882,11 +2882,14 @@ export function getSpine(canvas) {
             var atlasPages = new Array()
             try {
               var atlas = new spine.TextureAtlas(atlasData, function (path) {
-                atlasPages.push(replaceDoubleSlashesRegex(parent + '/' + path))
+                if (parent) {
+                  atlasPages.push(parent + '/' + path)
+                } else {
+                  atlasPages.push(path)
+                }
                 var image = canvas.createImage()
                 image.width = 16
                 image.height = 16
-
                 return new spine.FakeTexture(image)
               })
               _this.assets[path] = atlas
@@ -2915,9 +2918,7 @@ export function getSpine(canvas) {
                         var atlas = new spine.TextureAtlas(atlasData, function (
                           path
                         ) {
-                          return _this.get(
-                            replaceDoubleSlashesRegex(parent + '/' + path)
-                          )
+                          return _this.get(parent + '/' + path)
                         })
                         _this.assets[path] = atlas
                         if (success) success(path, atlas)
@@ -3054,6 +3055,7 @@ export function getSpine(canvas) {
     })()
     spine.AssetManager = AssetManager
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var AtlasAttachmentLoader = (function () {
       function AtlasAttachmentLoader(atlas) {
@@ -3065,8 +3067,14 @@ export function getSpine(canvas) {
         path
       ) {
         var region = this.atlas.findRegion(path)
-        if (region == null) console.error('Region not found in atlas: ' + path)
-
+        if (region == null)
+          throw new Error(
+            'Region not found in atlas: ' +
+              path +
+              ' (region attachment: ' +
+              name +
+              ')'
+          )
         region.renderObject = region
         var attachment = new spine.RegionAttachment(name)
         attachment.setRegion(region)
@@ -3078,7 +3086,14 @@ export function getSpine(canvas) {
         path
       ) {
         var region = this.atlas.findRegion(path)
-        if (region == null) console.error('Region not found in atlas: ' + path)
+        if (region == null)
+          throw new Error(
+            'Region not found in atlas: ' +
+              path +
+              ' (mesh attachment: ' +
+              name +
+              ')'
+          )
         region.renderObject = region
         var attachment = new spine.MeshAttachment(name)
         attachment.region = region
@@ -3112,6 +3127,7 @@ export function getSpine(canvas) {
     })()
     spine.AtlasAttachmentLoader = AtlasAttachmentLoader
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var BlendMode
     ;(function (BlendMode) {
@@ -3121,6 +3137,7 @@ export function getSpine(canvas) {
       BlendMode[(BlendMode['Screen'] = 3)] = 'Screen'
     })((BlendMode = spine.BlendMode || (spine.BlendMode = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var Bone = (function () {
       function Bone(data, skeleton, parent) {
@@ -3421,6 +3438,7 @@ export function getSpine(canvas) {
     })()
     spine.Bone = Bone
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var BoneData = (function () {
       function BoneData(index, name, parent) {
@@ -3452,6 +3470,7 @@ export function getSpine(canvas) {
         'NoScaleOrReflection'
     })((TransformMode = spine.TransformMode || (spine.TransformMode = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var Event = (function () {
       function Event(time, data) {
@@ -3463,6 +3482,7 @@ export function getSpine(canvas) {
     })()
     spine.Event = Event
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var EventData = (function () {
       function EventData(name) {
@@ -3472,6 +3492,7 @@ export function getSpine(canvas) {
     })()
     spine.EventData = EventData
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var IkConstraint = (function () {
       function IkConstraint(data, skeleton) {
@@ -3753,6 +3774,7 @@ export function getSpine(canvas) {
     })()
     spine.IkConstraint = IkConstraint
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var IkConstraintData = (function () {
       function IkConstraintData(name) {
@@ -3769,6 +3791,7 @@ export function getSpine(canvas) {
     })()
     spine.IkConstraintData = IkConstraintData
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var PathConstraint = (function () {
       function PathConstraint(data, skeleton) {
@@ -4272,6 +4295,7 @@ export function getSpine(canvas) {
     })()
     spine.PathConstraint = PathConstraint
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var PathConstraintData = (function () {
       function PathConstraintData(name) {
@@ -4300,6 +4324,7 @@ export function getSpine(canvas) {
       RotateMode[(RotateMode['ChainScale'] = 2)] = 'ChainScale'
     })((RotateMode = spine.RotateMode || (spine.RotateMode = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var Assets = (function () {
       function Assets(clientId) {
@@ -4448,6 +4473,7 @@ export function getSpine(canvas) {
     })()
     spine.SharedAssetManager = SharedAssetManager
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var Skeleton = (function () {
       function Skeleton(data) {
@@ -4887,6 +4913,7 @@ export function getSpine(canvas) {
     })()
     spine.Skeleton = Skeleton
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var SkeletonBounds = (function () {
       function SkeletonBounds() {
@@ -5095,6 +5122,7 @@ export function getSpine(canvas) {
     })()
     spine.SkeletonBounds = SkeletonBounds
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var SkeletonClipping = (function () {
       function SkeletonClipping() {
@@ -5443,6 +5471,7 @@ export function getSpine(canvas) {
     })()
     spine.SkeletonClipping = SkeletonClipping
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var SkeletonData = (function () {
       function SkeletonData() {
@@ -5563,6 +5592,7 @@ export function getSpine(canvas) {
     })()
     spine.SkeletonData = SkeletonData
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var SkeletonJson = (function () {
       function SkeletonJson(attachmentLoader) {
@@ -6492,6 +6522,7 @@ export function getSpine(canvas) {
       return LinkedMesh
     })()
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var Skin = (function () {
       function Skin(name) {
@@ -6533,6 +6564,7 @@ export function getSpine(canvas) {
     })()
     spine.Skin = Skin
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var Slot = (function () {
       function Slot(data, bone) {
@@ -6579,6 +6611,7 @@ export function getSpine(canvas) {
     })()
     spine.Slot = Slot
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var SlotData = (function () {
       function SlotData(index, name, boneData) {
@@ -6594,6 +6627,7 @@ export function getSpine(canvas) {
     })()
     spine.SlotData = SlotData
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var Texture = (function () {
       function Texture(image) {
@@ -6686,6 +6720,7 @@ export function getSpine(canvas) {
     })(Texture)
     spine.FakeTexture = FakeTexture
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var TextureAtlas = (function () {
       function TextureAtlas(atlasText, textureLoader) {
@@ -6830,6 +6865,7 @@ export function getSpine(canvas) {
     })(spine.TextureRegion)
     spine.TextureAtlasRegion = TextureAtlasRegion
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var TransformConstraint = (function () {
       function TransformConstraint(data, skeleton) {
@@ -7124,6 +7160,7 @@ export function getSpine(canvas) {
     })()
     spine.TransformConstraint = TransformConstraint
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var TransformConstraintData = (function () {
       function TransformConstraintData(name) {
@@ -7148,6 +7185,7 @@ export function getSpine(canvas) {
     })()
     spine.TransformConstraintData = TransformConstraintData
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var Triangulator = (function () {
       function Triangulator() {
@@ -7438,6 +7476,7 @@ export function getSpine(canvas) {
     })()
     spine.Triangulator = Triangulator
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var IntSet = (function () {
       function IntSet() {
@@ -7833,6 +7872,7 @@ export function getSpine(canvas) {
       })(new Float32Array(1))
     }
   })()
+  var spine
   ;(function (spine) {
     var Attachment = (function () {
       function Attachment(name) {
@@ -7937,6 +7977,7 @@ export function getSpine(canvas) {
     })(Attachment)
     spine.VertexAttachment = VertexAttachment
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var AttachmentType
     ;(function (AttachmentType) {
@@ -7948,6 +7989,7 @@ export function getSpine(canvas) {
       AttachmentType[(AttachmentType['Point'] = 5)] = 'Point'
     })((AttachmentType = spine.AttachmentType || (spine.AttachmentType = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var BoundingBoxAttachment = (function (_super) {
       __extends(BoundingBoxAttachment, _super)
@@ -7960,6 +8002,7 @@ export function getSpine(canvas) {
     })(spine.VertexAttachment)
     spine.BoundingBoxAttachment = BoundingBoxAttachment
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var ClippingAttachment = (function (_super) {
       __extends(ClippingAttachment, _super)
@@ -7972,6 +8015,7 @@ export function getSpine(canvas) {
     })(spine.VertexAttachment)
     spine.ClippingAttachment = ClippingAttachment
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var MeshAttachment = (function (_super) {
       __extends(MeshAttachment, _super)
@@ -8058,6 +8102,7 @@ export function getSpine(canvas) {
     })(spine.VertexAttachment)
     spine.MeshAttachment = MeshAttachment
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var PathAttachment = (function (_super) {
       __extends(PathAttachment, _super)
@@ -8072,6 +8117,7 @@ export function getSpine(canvas) {
     })(spine.VertexAttachment)
     spine.PathAttachment = PathAttachment
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var PointAttachment = (function (_super) {
       __extends(PointAttachment, _super)
@@ -8096,6 +8142,7 @@ export function getSpine(canvas) {
     })(spine.VertexAttachment)
     spine.PointAttachment = PointAttachment
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var RegionAttachment = (function (_super) {
       __extends(RegionAttachment, _super)
@@ -8248,6 +8295,7 @@ export function getSpine(canvas) {
     })(spine.Attachment)
     spine.RegionAttachment = RegionAttachment
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var JitterEffect = (function () {
       function JitterEffect(jitterX, jitterY) {
@@ -8272,6 +8320,7 @@ export function getSpine(canvas) {
     })()
     spine.JitterEffect = JitterEffect
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var SwirlEffect = (function () {
       function SwirlEffect(radius) {
@@ -8310,6 +8359,7 @@ export function getSpine(canvas) {
     })()
     spine.SwirlEffect = SwirlEffect
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -8334,6 +8384,7 @@ export function getSpine(canvas) {
       webgl.AssetManager = AssetManager
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -8404,6 +8455,7 @@ export function getSpine(canvas) {
       webgl.OrthoCamera = OrthoCamera
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -8490,6 +8542,7 @@ export function getSpine(canvas) {
       webgl.GLTexture = GLTexture
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -8693,6 +8746,7 @@ export function getSpine(canvas) {
       webgl.Touch = Touch
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -8834,6 +8888,7 @@ export function getSpine(canvas) {
       webgl.LoadingScreen = LoadingScreen
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -9381,6 +9436,7 @@ export function getSpine(canvas) {
       webgl.Matrix4 = Matrix4
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -9654,6 +9710,7 @@ export function getSpine(canvas) {
       )
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -9745,8 +9802,7 @@ export function getSpine(canvas) {
         PolygonBatcher.prototype.flush = function () {
           var gl = this.context.gl
           if (this.verticesLength == 0) return
-          if (this.lastTexture && typeof this.lastTexture.bind == 'function')
-            this.lastTexture.bind()
+          this.lastTexture.bind()
           this.mesh.draw(this.shader, gl.TRIANGLES)
           this.verticesLength = 0
           this.indicesLength = 0
@@ -9777,6 +9833,7 @@ export function getSpine(canvas) {
       webgl.PolygonBatcher = PolygonBatcher
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -10455,6 +10512,7 @@ export function getSpine(canvas) {
       })((ResizeMode = webgl.ResizeMode || (webgl.ResizeMode = {})))
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -10721,6 +10779,7 @@ export function getSpine(canvas) {
       webgl.Shader = Shader
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -11142,6 +11201,7 @@ export function getSpine(canvas) {
       })((ShapeType = webgl.ShapeType || (webgl.ShapeType = {})))
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -11398,6 +11458,7 @@ export function getSpine(canvas) {
       webgl.SkeletonDebugRenderer = SkeletonDebugRenderer
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -11756,6 +11817,7 @@ export function getSpine(canvas) {
       webgl.SkeletonRenderer = SkeletonRenderer
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
@@ -11883,6 +11945,7 @@ export function getSpine(canvas) {
       webgl.Vector3 = Vector3
     })((webgl = spine.webgl || (spine.webgl = {})))
   })(spine || (spine = {}))
+  var spine
   ;(function (spine) {
     var webgl
     ;(function (webgl) {
