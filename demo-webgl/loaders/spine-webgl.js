@@ -2803,7 +2803,6 @@ export function getSpine(canvas) {
         if (error === void 0) {
           error = null
         }
-        debugger
         path = this.pathPrefix + path
         this.toLoad++
         var img = canvas.createImage()
@@ -2872,7 +2871,6 @@ export function getSpine(canvas) {
           path.lastIndexOf('/') >= 0
             ? path.substring(0, path.lastIndexOf('/'))
             : ''
-        debugger
         path = this.pathPrefix + path
         this.toLoad++
         AssetManager.downloadText(
@@ -9802,6 +9800,7 @@ export function getSpine(canvas) {
         PolygonBatcher.prototype.flush = function () {
           var gl = this.context.gl
           if (this.verticesLength == 0) return
+          if (this.lastTexture == null) return
           this.lastTexture.bind()
           this.mesh.draw(this.shader, gl.TRIANGLES)
           this.verticesLength = 0
